@@ -11,7 +11,7 @@ import slide6 from "../../../assets/home/01.jpg"
 const Banner = () => {
 
     return (
-        <Carousel>
+        <Carousel autoPlay={true} infiniteLoop={true}>
             <div>
                 <img src={slide1} />
                 <p className="legend">Legend 1</p>
