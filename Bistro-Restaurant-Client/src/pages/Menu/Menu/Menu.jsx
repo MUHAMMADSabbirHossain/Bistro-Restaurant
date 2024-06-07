@@ -21,13 +21,13 @@ const Menu = () => {
     return (
         <div>
             <Helmet>
-                <title>Bistro Menu</title>
+                <title>Bistro | Menu</title>
             </Helmet>
             <Cover
                 img={menuImg}
                 title="Our Menu"></Cover>
 
-            {/* ?main conver */}
+            {/* main conver */}
             <SectionTitle
                 subHeading="Don't miss"
                 heading="Today Offers"></SectionTitle>
@@ -39,24 +39,24 @@ const Menu = () => {
             {/* dessert menu items */}
             <MenuCategory
                 items={dessert}
-                title="Dessert"
+                title="dessert"
                 img={dessertImg}></MenuCategory>
 
             {/* pizza */}
             <MenuCategory
-                title="Pizza"
+                title="pizza"
                 items={pizza}
                 img={pizzaImg}></MenuCategory>
 
             {/* salad */}
             <MenuCategory
-                title="Salad"
+                title="salad"
                 items={salad}
                 img={saladImg}></MenuCategory>
 
             {/* soup */}
             <MenuCategory
-                title="Soup"
+                title="soup"
                 items={soup}
                 img={soupImg}></MenuCategory>
         </div>
