@@ -1,9 +1,39 @@
+import useAuth from "../../hooks/useAuth";
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from "react-router-dom";
+
 const FoodCard = ({ item }) => {
 
-    const { image, price, recipe, name } = item;
+    const { image, price, recipe, name, _id } = item;
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleAddToCart = (food) => {
-        console.log(food);
+        console.log(food, user?.email);
+
+        if (user && user.email) {
+            // TODO: send cart item to the database
+            const cartItem = {
+
+            }
+        }
+        else {
+            Swal.fire({
+                title: "You are not Logged In.",
+                text: "Please login to add to the cart",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, login!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // send the user to the login pase
+                    navigate("/login", { state: { from: location } });
+                }
+            });
+        }
     }
 
     return (
