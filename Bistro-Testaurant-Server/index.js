@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.fgw3jbv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -52,6 +52,17 @@ async function run() {
         app.post('/carts', async (req, res) => {
             const cartItem = req.body;
             const result = await cartCollection.insertOne(cartItem);
+            res.send(result);
+        })
+
+        app.delete('/carts/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = { _id: new ObjectId(id) };
+            console.log(query);
+
+            const result = await cartCollection.deleteOne(query);
+            console.log(result);
             res.send(result);
         })
 
