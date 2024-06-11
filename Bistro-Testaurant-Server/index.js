@@ -79,7 +79,7 @@ async function run() {
             res.send(result);
         })
 
-        app.get('/users/admin/:email', verifyToken, verifyAdmin, async (req, res) => {
+        app.get('/users/admin/:email', verifyToken, async (req, res) => {
             const email = req.params.email;
             console.log(email);
             if (email !== req.decoded.email) {
