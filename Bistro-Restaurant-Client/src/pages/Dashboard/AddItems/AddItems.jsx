@@ -83,7 +83,7 @@ const AddItems = () => {
                             <select defaultValue="default"
                                 {...register("category", { required: true })} className="select select-bordered w-full ">
                                 <option disabled value="default">Select a category</option>
-                                <option value="female">Salad</option>
+                                <option value="salad">Salad</option>
                                 <option value="pizza">Pizza</option>
                                 <option value="soup">Soup</option>
                                 <option value="dessert">Dessert</option>
