@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 var jwt = require('jsonwebtoken');
 require("dotenv").config();
+// This is your test secret API key.
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const port = process.env.PORT || 5000;
 
 // middleware
@@ -209,6 +211,22 @@ async function run() {
             const result = await cartCollection.deleteOne(query);
             console.log(result);
             res.send(result);
+        })
+
+        // payment intent
+        app.post("/create-payment-intent", async (req, res) => {
+            const { price } = req.body;
+            const amount = parseInt(price * 100);
+            console.log("amount: ", amount);
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: amount,
+                currency: "usd",
+                payment_method_types: ["card"]
+            });
+
+            res.send({
+                clientSecret: paymentIntent.client_secret,
+            });
         })
 
 
