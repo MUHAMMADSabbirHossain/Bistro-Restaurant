@@ -5,6 +5,13 @@ var jwt = require('jsonwebtoken');
 require("dotenv").config();
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+    username: "api",
+    key: process.env.MAIL_GUN_API_KEY,
+});
 const port = process.env.PORT || 5000;
 
 // middleware
@@ -254,6 +261,25 @@ async function run() {
             };
 
             const deleteResult = await cartCollection.deleteMany(query);
+
+            // send user email about payment confirmation
+            mg.messages
+                .create(process.env.MAIL_SENDING_DOMAIN, {
+                    from: "Mailgun Sandbox <postmaster@sandbox6e960403d53d4230a9108df9490a6cd7.mailgun.org>",
+                    to: ["dustobalok000@gmail.com"],
+                    subject: "Bistro Boss Order Confirmation",
+                    text: "Testing some Mailgun awesomness!",
+                    html: `
+                <div>
+                  <h2>Thank you for your order</h2>
+                  <h4>Your Transaction Id: <strong>${payment.transactionId}</strong></h4>
+                  <p>We would like to get your feedback about the food</p>
+                </div>
+              `
+                })
+                .then(msg => console.log(msg)) // logs response data
+                .catch(err => console.log(err)); // logs any error`;
+
             res.send({ paymentResult, deleteResult });
         })
 
